@@ -9,7 +9,7 @@
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -143,6 +143,8 @@
             .zoom-out-card, .timeline-fade-item { transition: none !important; }
             .scroll-reveal-item { opacity: 1; transform: none; filter: none; transition: none; }
         }
+        .info-popup-panel { opacity: 0; transform: translateY(28px) scale(.94); transition: opacity .28s ease, transform .38s cubic-bezier(.2,.8,.2,1); }
+        .info-popup-panel.info-popup-show { opacity: 1; transform: none; }
     </style>
 </head>
 <body class="bg-[#faf8f5] text-slate-800 dark:bg-slatebrand-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col pb-20 md:pb-0">
@@ -521,7 +523,11 @@
                 </div>
             </div>
 
-            <div id="katalog-books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <section class="space-y-5 pt-2">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3"><div><span class="text-xs font-extrabold uppercase tracking-wider text-terracotta-600 dark:text-terracotta-400">Koleksi Baca Online</span><h3 class="font-display text-2xl sm:text-3xl font-extrabold">10 Buku Pilihan Wordie</h3><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">5 novel dan 5 buku akademik. Baca langsung di web atau pinjam buku fisiknya.</p></div>
+<span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 px-3 py-2 rounded-xl"><i data-lucide="book-open-check" class="w-4 h-4"></i> Bisa dibaca online</span></div>
+<div id="katalog-baca-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div></section>
+<div id="katalog-books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
         </div>
 
         <!-- ===================================================================== -->
@@ -574,7 +580,7 @@
 
             <!-- Filosofi, Visi & Misi (Pop-Up Muncul Zoom Out) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="zoom-out-card bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm">
+                <div onclick="bukaInfoKartu(this)" class="zoom-out-card cursor-pointer bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm">
                     <div class="flex items-center gap-3">
                         <div class="p-2.5 rounded-xl bg-terracotta-100 dark:bg-terracotta-900/40 text-terracotta-600">
                             <i data-lucide="compass" class="w-6 h-6"></i>
@@ -592,7 +598,7 @@
                     </div>
                 </div>
 
-                <div class="zoom-out-card bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm" style="transition-delay: 140ms;">
+                <div onclick="bukaInfoKartu(this)" class="zoom-out-card cursor-pointer bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm" style="transition-delay: 140ms;">
                     <div class="flex items-center gap-3">
                         <div class="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600">
                             <i data-lucide="target" class="w-6 h-6"></i>
@@ -664,7 +670,7 @@
 
             <!-- Alamat Lengkap -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-5">
+                <div class="timeline-fade-item loc-fade lg:col-span-5 bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-5">
                     <h3 class="font-display text-xl font-extrabold">Lokasi & Kontak Perpustakaan</h3>
                     <div class="space-y-4 text-sm">
                         <div class="flex items-start gap-3">
@@ -689,52 +695,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Kanal Media Sosial & Email Resmi -->
-                    <div class="pt-4 border-t border-stone-200 dark:border-slate-800 space-y-2.5">
-                        <p class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Terhubung di Media Sosial</p>
-                        <div class="grid grid-cols-2 gap-2.5 text-xs">
-                            <a href="https://instagram.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/80 border border-stone-200/70 dark:border-slate-700 hover:border-terracotta-500 hover:text-terracotta-600 transition group">
-                                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shrink-0">
-                                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="2.5"/><circle cx="17.6" cy="6.4" r="1.5" fill="currentColor"/></svg>
-                                </span>
-                                <div class="min-w-0">
-                                    <span class="block font-bold truncate">Instagram</span>
-                                    <span class="block text-[10px] text-slate-500 truncate">@eperpuswordie</span>
-                                </div>
-                            </a>
-                            <a href="https://facebook.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/80 border border-stone-200/70 dark:border-slate-700 hover:border-terracotta-500 hover:text-terracotta-600 transition group">
-                                <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
-                                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.2 21v-8.2h2.8l.45-3.2H14.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.12c-.3-.04-1.32-.12-2.5-.12-2.48 0-4.18 1.51-4.18 4.29V9.6H8v3.2h2.82V21h3.38z"/></svg>
-                                </span>
-                                <div class="min-w-0">
-                                    <span class="block font-bold truncate">Facebook</span>
-                                    <span class="block text-[10px] text-slate-500 truncate">e-perpus wordie</span>
-                                </div>
-                            </a>
-                            <a href="https://x.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/80 border border-stone-200/70 dark:border-slate-700 hover:border-terracotta-500 hover:text-terracotta-600 transition group">
-                                <span class="w-8 h-8 rounded-xl bg-slate-900 dark:bg-slate-950 text-white flex items-center justify-center shrink-0 font-display font-extrabold text-sm">
-                                    𝕏
-                                </span>
-                                <div class="min-w-0">
-                                    <span class="block font-bold truncate">X (Twitter)</span>
-                                    <span class="block text-[10px] text-slate-500 truncate">@eperpuswordie</span>
-                                </div>
-                            </a>
-                            <a href="mailto:halo@eperpuswordie.id" class="flex items-center gap-2.5 p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/80 border border-stone-200/70 dark:border-slate-700 hover:border-terracotta-500 hover:text-terracotta-600 transition group">
-                                <span class="w-8 h-8 rounded-xl bg-terracotta-600 text-white flex items-center justify-center shrink-0">
-                                    <i data-lucide="mail" class="w-4 h-4"></i>
-                                </span>
-                                <div class="min-w-0">
-                                    <span class="block font-bold truncate">Email Resmi</span>
-                                    <span class="block text-[10px] text-slate-500 truncate">halo@eperpuswordie.id</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="lg:col-span-7 relative rounded-3xl overflow-hidden bg-gradient-to-br from-stone-200 via-stone-100 to-terracotta-100 dark:from-slate-800 dark:via-slatebrand-900 dark:to-slate-800 border border-stone-200 dark:border-slate-700 p-6 sm:p-8 flex flex-col justify-between min-h-[260px]">
+                <div class="timeline-fade-item loc-fade lg:col-span-7 relative rounded-3xl overflow-hidden bg-gradient-to-br from-stone-200 via-stone-100 to-terracotta-100 dark:from-slate-800 dark:via-slatebrand-900 dark:to-slate-800 border border-stone-200 dark:border-slate-700 p-6 sm:p-8 flex flex-col justify-between min-h-[260px]">
                     <div class="absolute inset-0 opacity-20 dark:opacity-10" style="background-image: radial-gradient(#ea580c 1.5px, transparent 1.5px); background-size: 22px 22px;"></div>
                     <div class="relative z-10 flex items-center justify-between">
                         <span class="px-3 py-1 rounded-full bg-white/90 dark:bg-slatebrand-950/90 text-xs font-bold shadow-sm flex items-center gap-1.5">
@@ -759,7 +722,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <section class="bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 space-y-5">
+<div><span class="text-xs font-extrabold uppercase tracking-wider text-terracotta-600 dark:text-terracotta-400">Tetap Terhubung</span><h3 class="font-display text-2xl font-extrabold mt-1">Ikuti Media Sosial Wordie</h3><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Temukan kabar koleksi baru, agenda literasi, dan kegiatan komunitas kami.</p></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-3"><a href="https://instagram.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 h-full min-h-[76px] rounded-2xl border border-stone-200 dark:border-slate-700 hover:border-terracotta-400 hover:bg-stone-50 dark:hover:bg-slate-800 transition"><span class="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-fuchsia-500 to-orange-500 text-white flex items-center justify-center"><i data-lucide="instagram" class="w-5 h-5"></i></span><span class="min-w-0"><b class="block text-sm">Instagram</b><small class="block truncate text-slate-500">@eperpuswordie</small></span></a><a href="https://facebook.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 h-full min-h-[76px] rounded-2xl border border-stone-200 dark:border-slate-700 hover:border-terracotta-400 hover:bg-stone-50 dark:hover:bg-slate-800 transition"><span class="w-10 h-10 shrink-0 rounded-xl bg-blue-600 text-white flex items-center justify-center"><i data-lucide="facebook" class="w-5 h-5"></i></span><span class="min-w-0"><b class="block text-sm">Facebook</b><small class="block truncate text-slate-500">e-perpus wordie</small></span></a><a href="https://x.com/eperpuswordie" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 h-full min-h-[76px] rounded-2xl border border-stone-200 dark:border-slate-700 hover:border-terracotta-400 hover:bg-stone-50 dark:hover:bg-slate-800 transition"><span class="w-10 h-10 shrink-0 rounded-xl bg-slate-950 text-white flex items-center justify-center"><span class="font-black text-lg">X</span></span><span class="min-w-0"><b class="block text-sm">X</b><small class="block truncate text-slate-500">@eperpuswordie</small></span></a><a href="mailto:halo@eperpuswordie.id" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 h-full min-h-[76px] rounded-2xl border border-stone-200 dark:border-slate-700 hover:border-terracotta-400 hover:bg-stone-50 dark:hover:bg-slate-800 transition"><span class="w-10 h-10 shrink-0 rounded-xl bg-terracotta-600 text-white flex items-center justify-center"><i data-lucide="mail" class="w-5 h-5"></i></span><span class="min-w-0"><b class="block text-sm">Email Resmi</b><small class="block truncate text-slate-500">halo@eperpuswordie.id</small></span></a></div></section>
+</div>
 
         <!-- ===================================================================== -->
         <!-- HALAMAN 4: AKUN PEMINJAM (KHUSUS PEMINJAM / ANGGOTA)                  -->
@@ -800,8 +766,13 @@
                 <p class="text-center text-sm text-slate-500 mt-5"><span id="borrower-auth-switch-label">Belum punya akun?</span>
                     <button id="borrower-auth-switch" type="button" onclick="toggleBorrowerAuthMode()" class="font-bold text-terracotta-600 hover:underline">Daftar sekarang</button>
                 </p>
+                <p class="text-center text-xs text-slate-400 mt-3">Pengelola perpustakaan? <button type="button" onclick="navigateTo('admin')" class="font-bold text-amber-600 hover:underline">Login Admin</button></p>
             </section>
             <div id="borrower-dashboard" class="hidden space-y-8">
+            <section class="bg-white dark:bg-slatebrand-900 p-5 sm:p-6 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center justify-between gap-3 mb-4"><div><h3 class="font-display font-extrabold text-lg flex items-center gap-2"><i data-lucide="bell" class="w-5 h-5 text-terracotta-600"></i> Notifikasi</h3><p class="text-xs text-slate-500 mt-1">Pengingat pengembalian dan pesan dari admin.</p></div><span id="notif-count" class="px-3 py-1 rounded-full bg-terracotta-100 text-terracotta-700 text-xs font-bold">0 belum dibaca</span></div>
+                <div id="notif-list" class="space-y-3"></div>
+            </section>
             <div class="bg-white dark:bg-slatebrand-900 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-sm">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="flex items-center gap-4">
@@ -877,22 +848,21 @@
             <!-- Form Login Admin (Terkunci sebelum password benar) -->
             <div id="admin-login-wrapper" class="max-w-md mx-auto bg-white dark:bg-slatebrand-900 p-8 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-xl space-y-6 my-6">
                 <div class="text-center space-y-2">
-                    <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-amber-500 to-terracotta-600 text-white flex items-center justify-center shadow-lg">
-                        <i data-lucide="shield-alert" class="w-8 h-8"></i>
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center shadow-lg"><i data-lucide="shield-check" class="w-7 h-7"></i>
                     </div>
-                    <span class="inline-block px-3 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[10px] font-extrabold uppercase tracking-wider">Area Terbatas</span>
                     <h2 class="font-display text-2xl font-extrabold">Portal Kelola Admin</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Halaman ini khusus untuk pengelola perpustakaan. Masukkan kata sandi admin untuk mengakses seluruh kendali katalog dan transaksi.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Halaman ini khusus untuk pengelola perpustakaan. Masukkan kata sandi administrator untuk mengakses kendali katalog dan transaksi.</p>
                 </div>
                 <form onsubmit="handleAdminLogin(event)" class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold mb-1.5">Kata Sandi Administrator</label>
                         <input type="password" id="admin-password-input" required placeholder="Masukkan kata sandi administrator" class="w-full px-4 py-3 rounded-xl bg-stone-100 dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-terracotta-500">
                     </div>
-                    <button type="submit" class="w-full py-3.5 rounded-xl bg-slatebrand-900 dark:bg-terracotta-600 hover:opacity-95 text-white font-bold text-sm shadow-lg transition flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full py-3 rounded-xl bg-slate-900 dark:bg-terracotta-600 hover:opacity-90 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2">
                         <i data-lucide="unlock" class="w-4 h-4"></i> Buka Akses Kelola Admin
                     </button>
                 </form>
+                <p class="text-center text-xs text-slate-400">Anggota perpustakaan? <button type="button" onclick="navigateTo('akun')" class="font-bold text-terracotta-600 hover:underline">Login Peminjam</button></p>
             </div>
 
             <!-- Dashboard Penuh Admin (Muncul setelah login berhasil) -->
@@ -906,18 +876,15 @@
                         <div>
                             <span class="px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-bold">Hak Akses Penuh (Administrator)</span>
                             <h2 class="font-display text-2xl font-extrabold mt-1">Dashboard Kendali Pustakawan</h2>
-                            <p class="text-xs text-slate-300">Kelola seluruh data buku, pantau semua transaksi peminjam, dan atur database sistem.</p>
+                            <p class="text-xs text-slate-300">Kelola data buku, pantau semua transaksi peminjam, dan atur stok.</p>
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2.5">
                         <button onclick="openAdminBookModal()" class="px-4 py-2.5 rounded-xl bg-terracotta-600 hover:bg-terracotta-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Buku Baru
                         </button>
-                        <button onclick="confirmResetAllData()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center gap-1.5 transition">
-                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset Database
-                        </button>
                         <button onclick="handleAdminLogout()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 transition">
-                            <i data-lucide="log-out" class="w-4 h-4"></i> Kunci / Keluar
+                            <i data-lucide="log-out" class="w-4 h-4"></i> Logout Admin
                         </button>
                     </div>
                 </div>
@@ -957,6 +924,7 @@
             </div>
         </div>
 
+        <div id="page-baca" class="page-view hidden max-w-4xl mx-auto space-y-6"></div>
     </main>
 
     <!-- ==================== FOOTER ==================== -->
@@ -971,13 +939,13 @@
             <!-- Ikon Media Sosial Footer -->
             <div class="flex items-center gap-2.5">
                 <a href="https://instagram.com/eperpuswordie" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram @eperpuswordie" class="w-9 h-9 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-terracotta-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition">
-                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="2.5"/><circle cx="17.6" cy="6.4" r="1.5" fill="currentColor"/></svg>
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
                 </a>
                 <a href="https://facebook.com/eperpuswordie" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook e-perpus wordie" class="w-9 h-9 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-terracotta-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition">
-                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.2 21v-8.2h2.8l.45-3.2H14.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.12c-.3-.04-1.32-.12-2.5-.12-2.48 0-4.18 1.51-4.18 4.29V9.6H8v3.2h2.82V21h3.38z"/></svg>
+                    <i data-lucide="facebook" class="w-4 h-4"></i>
                 </a>
                 <a href="https://x.com/eperpuswordie" target="_blank" rel="noopener noreferrer" aria-label="X" title="X @eperpuswordie" class="w-9 h-9 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-terracotta-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center font-display font-extrabold text-sm transition">
-                    𝕏
+                    <span class="font-black text-sm">X</span>
                 </a>
                 <a href="mailto:halo@eperpuswordie.id" aria-label="Email" title="Email halo@eperpuswordie.id" class="w-9 h-9 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-terracotta-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -1229,6 +1197,17 @@
                 rating: '4.9',
                 synopsis: 'Memahami cara kerja model bahasa modern secara etis untuk membantu riset kepenulisan, pengarsipan pustaka, dan produktivitas kreatif.'
             }
+        ,
+{"id": "baca-01", "title": "Senja di Peron Terakhir", "author": "Alya Prameswari", "category": "Fiksi", "year": 2026, "stock": 10, "rating": "4.9", "synopsis": "Di sebuah stasiun kecil, Nara menemukan surat-surat yang tertinggal dan belajar bahwa setiap perpisahan menyimpan awal yang baru."},
+{"id": "baca-02", "title": "Rumah yang Menyimpan Hujan", "author": "Raka Mahendra", "category": "Fiksi", "year": 2026, "stock": 10, "rating": "4.8", "synopsis": "Kepulangan seorang anak ke rumah masa kecil membuka kembali kenangan keluarga, persahabatan, dan keberanian untuk memaafkan."},
+{"id": "baca-03", "title": "Peta untuk Esok Hari", "author": "Nadia Kirana", "category": "Fiksi", "year": 2026, "stock": 10, "rating": "4.9", "synopsis": "Tiga sahabat membuat peta mimpi di buku usang. Perjalanan sederhana itu mengajarkan arti tumbuh dan memilih jalan sendiri."},
+{"id": "baca-04", "title": "Surat dari Kebun Kecil", "author": "Dewi Anggraini", "category": "Fiksi", "year": 2026, "stock": 10, "rating": "4.7", "synopsis": "Di tengah kota yang sibuk, kebun peninggalan nenek menjadi tempat dua generasi saling memahami melalui cerita dan tanaman."},
+{"id": "baca-05", "title": "Langit Setelah Pukul Enam", "author": "Fajar Wicaksono", "category": "Fiksi", "year": 2026, "stock": 10, "rating": "4.8", "synopsis": "Seorang fotografer pemula mendokumentasikan sudut kota setiap sore dan menemukan bahwa harapan sering hadir dalam hal sederhana."},
+{"id": "baca-06", "title": "Dasar Berpikir Kritis untuk Pelajar", "author": "Dr. Intan Permata", "category": "Teknologi", "year": 2026, "stock": 10, "rating": "4.9", "synopsis": "Pengantar praktis mengenali klaim, memeriksa bukti, menyusun argumen, dan mengambil keputusan berdasarkan alasan yang kuat."},
+{"id": "baca-07", "title": "Literasi Digital dan Keamanan Data", "author": "Bima Santoso", "category": "Teknologi", "year": 2026, "stock": 10, "rating": "4.8", "synopsis": "Panduan memahami jejak digital, kata sandi, privasi, penipuan daring, dan kebiasaan aman saat menggunakan internet."},
+{"id": "baca-08", "title": "Pengantar Ekologi dan Perubahan Iklim", "author": "Prof. Maya Lestari", "category": "Sejarah", "year": 2026, "stock": 10, "rating": "4.9", "synopsis": "Mengenal hubungan ekosistem, aktivitas manusia, perubahan iklim, serta langkah sederhana menjaga lingkungan sekitar."},
+{"id": "baca-09", "title": "Matematika dalam Kehidupan Sehari-hari", "author": "Arif Nugraha, M.Pd.", "category": "Teknologi", "year": 2026, "stock": 10, "rating": "4.7", "synopsis": "Konsep rasio, persentase, peluang, dan statistika dijelaskan melalui contoh belanja, perjalanan, dan pengelolaan uang."},
+{"id": "baca-10", "title": "Menulis Ilmiah dari Rasa Ingin Tahu", "author": "Dr. Siti Rahma", "category": "Bisnis", "year": 2026, "stock": 10, "rating": "4.9", "synopsis": "Langkah menyusun pertanyaan penelitian, mencari sumber tepercaya, mencatat data, dan menulis laporan yang runtut dan jujur."}
         ];
 
         const DEFAULT_USER = {
@@ -1263,6 +1242,53 @@
             BORROWER_SESSION: 'wordie_v4_borrower_session'
         };
 
+const BACA_ISI = {"baca-01": [["Peron yang Sepi", "Nara selalu datang sepuluh menit sebelum kereta terakhir berangkat. Bukan karena ia takut tertinggal, melainkan karena stasiun kecil itu memberinya waktu untuk berpikir. Di bangku kayu dekat papan jadwal, ia menemukan sebuah amplop cokelat tanpa nama penerima. Di dalamnya ada selembar surat: “Jika suatu hari kamu merasa tidak tahu harus ke mana, mulailah dengan mengingat tempat yang membuatmu berani.”\n\nNara membaca kalimat itu berulang kali. Ia sedang menunda keputusan untuk merantau, sementara ibunya berharap ia tetap tinggal. Surat itu tidak memberi jawaban, tetapi membuatnya bertanya: apakah keberanian berarti pergi, atau justru berani membicarakan keinginannya?"], ["Kereta Pagi", "Keesokan harinya Nara kembali ke stasiun. Petugas bernama Pak Jaya mengenali amplop itu sebagai bagian dari kotak surat lama milik ruang tunggu. Surat-surat tersebut pernah ditulis penumpang untuk siapa pun yang membutuhkannya. Nara lalu menulis balasan, bukan kepada seseorang, melainkan kepada dirinya sendiri.\n\nIa akhirnya berbicara dengan ibunya. Percakapan mereka tidak langsung mudah, tetapi keduanya belajar mendengarkan. Saat kereta pagi tiba, Nara naik dengan rencana yang lebih jelas dan hati yang lebih ringan. Ia tahu rumah akan selalu menjadi tempat untuk pulang."]], "baca-02": [["Kunci Berkarat", "Ketika hujan pertama turun, Lila pulang ke rumah kayu peninggalan neneknya. Rumah itu berbau buku lama dan kayu basah. Di laci meja, ia menemukan kunci kecil yang dibungkus kain biru. Kunci itu membuka lemari di beranda, tempat tersimpan puluhan potret keluarga dan catatan resep.\n\nDi balik setiap foto ada tulisan pendek tentang hari ketika foto itu diambil. Lila menyadari bahwa neneknya menyimpan kenangan bukan untuk membuat keluarga terus menoleh ke belakang, tetapi agar mereka tidak melupakan asal-usulnya."], ["Atap yang Bocor", "Hujan deras membuat air menetes dari atap dapur. Lila menghubungi ayahnya, yang sudah lama tidak ia ajak bicara. Mereka memperbaiki genting bersama, mula-mula dalam diam, lalu saling bercerita. Ternyata ayahnya juga merindukan rumah itu, tetapi tidak tahu bagaimana memulai percakapan.\n\nSore itu mereka menanam kembali bunga di halaman. Rumah tersebut masih memiliki banyak bagian yang perlu diperbaiki, sama seperti hubungan mereka. Namun kini Lila mengerti: merawat rumah bukan hanya memperbaiki dinding, melainkan juga memberi ruang bagi orang-orang di dalamnya untuk berubah."]], "baca-03": [["Buku Peta", "Tiga sahabat, Rafi, Sasa, dan Bimo, menemukan buku kosong di perpustakaan sekolah. Mereka sepakat mengisinya dengan peta tempat-tempat yang ingin dikunjungi sebelum lulus. Rafi menggambar pantai, Sasa memilih museum, sementara Bimo menandai bukit di pinggir kota.\n\nMereka menamai buku itu Peta untuk Esok Hari. Setiap titik disertai alasan: bukan sekadar tempat yang indah, tetapi pengalaman yang ingin mereka bawa pulang."], ["Jalan yang Berbeda", "Waktu berjalan dan pilihan mereka mulai berbeda. Rafi ingin belajar kelautan, Sasa tertarik pada sejarah, sedangkan Bimo belum yakin dengan cita-citanya. Mereka sempat takut persahabatan akan berubah jika tidak lagi memiliki tujuan yang sama.\n\nPada halaman terakhir, mereka menulis satu kalimat bersama: “Kita tidak harus berjalan di jalan yang sama untuk tetap saling menemukan.” Peta itu akhirnya menjadi pengingat bahwa masa depan bukan daftar tujuan yang wajib dituntaskan, melainkan ruang untuk terus belajar."]], "baca-04": [["Tanah di Ujung Gang", "Kebun kecil milik Nenek Sari terhimpit di antara rumah-rumah tinggi. Setelah nenek meninggal, cucunya, Mira, berniat menjual tanah itu. Namun sebuah buku catatan berisi jadwal menyiram dan pesan-pesan sederhana membuatnya menunda keputusan.\n\nDi halaman pertama tertulis: “Tanaman tidak tumbuh karena kita memerintahnya. Ia tumbuh karena kita memberi waktu, air, dan cahaya.” Mira mulai membersihkan kebun setiap sore."], ["Surat untuk Tetangga", "Seorang tetangga menawarkan bantuan membawa bibit. Anak-anak sekitar ikut menanam cabai dan tomat. Kebun yang semula sunyi berubah menjadi tempat bertukar cerita. Mira kemudian membuat papan kecil bertuliskan “Ambil secukupnya, tanam kembali bila mampu.”\n\nIa menyadari bahwa warisan nenek bukan sekadar sebidang tanah. Warisan itu adalah kebiasaan berbagi, kesabaran, dan kepedulian pada lingkungan. Kebun tersebut tetap kecil, tetapi manfaatnya tumbuh melampaui pagar."]], "baca-05": [["Foto Pukul Enam", "Setiap pukul enam sore, Damar memotret satu sudut kota dari halte bus. Ia memulai proyek itu untuk tugas sekolah, tetapi lama-kelamaan foto-fotonya menjadi catatan perubahan: pedagang yang membuka lapak, lampu toko yang menyala, dan orang-orang yang pulang setelah bekerja.\n\nSuatu hari kameranya kehabisan baterai. Tanpa foto, Damar duduk dan memperhatikan langit yang berubah warna. Ia mendengar tawa, suara kendaraan, dan percakapan singkat yang biasanya terlewat."], ["Cahaya yang Tertinggal", "Damar memilih menulis cerita pendek di samping foto-fotonya. Ia belajar bahwa gambar dapat merekam bentuk, tetapi perhatian membantu kita memahami makna. Proyek itu dipamerkan di sekolah dan mengundang banyak orang berbagi kisah tentang sudut kota favorit mereka.\n\nSejak itu Damar tetap memotret, tetapi tidak lagi mengejar gambar sempurna. Ia ingin menyimpan hal-hal kecil yang membuat sebuah tempat terasa hidup. Langit setelah pukul enam selalu berbeda, dan justru itulah yang membuatnya layak ditunggu."]], "baca-06": [["Apa Itu Berpikir Kritis?", "Berpikir kritis adalah kebiasaan memeriksa informasi sebelum menerima atau menyebarkannya. Sikap ini bukan berarti selalu membantah. Kita justru berusaha memahami sebuah pernyataan, mencari alasan yang mendukungnya, lalu menilai apakah alasan tersebut cukup kuat.\n\nMulailah dengan tiga pertanyaan: Apa klaim yang disampaikan? Bukti apa yang tersedia? Apakah ada penjelasan lain? Pertanyaan sederhana ini membantu kita membedakan fakta, pendapat, dan dugaan."], ["Menguji Sebuah Klaim", "Misalnya, sebuah iklan menyatakan bahwa metode belajar tertentu membuat semua siswa mendapat nilai tinggi. Klaim itu perlu diperiksa: siapa yang melakukan penelitian, berapa banyak peserta, bagaimana hasil diukur, dan apakah ada kelompok pembanding?\n\nCatat sumber dan tanggal informasi. Bandingkan beberapa sumber independen. Jika bukti belum cukup, katakan bahwa kesimpulannya masih sementara. Mengakui ketidakpastian bukan kelemahan; itu bagian penting dari penalaran yang jujur."]], "baca-07": [["Jejak Digital", "Jejak digital adalah rekaman aktivitas yang tertinggal saat kita menggunakan layanan daring. Unggahan, komentar, lokasi, dan data penggunaan dapat tersimpan lebih lama daripada yang kita perkirakan. Karena itu, pikirkan tujuan dan audiens sebelum membagikan sesuatu.\n\nAtur privasi akun, periksa izin aplikasi, dan hindari mengunggah informasi sensitif seperti alamat rumah atau dokumen identitas. Tidak semua hal yang dapat dibagikan perlu dipublikasikan."], ["Melindungi Akun", "Gunakan kata sandi panjang dan unik untuk setiap layanan. Pengelola kata sandi dapat membantu menyimpannya. Aktifkan autentikasi dua faktor agar akses tidak hanya bergantung pada kata sandi. Jangan pernah memberikan kode verifikasi kepada orang lain, termasuk pihak yang mengaku sebagai petugas.\n\nWaspadai pesan mendesak yang meminta klik tautan atau pembayaran. Periksa alamat situs dan hubungi layanan resmi melalui kanal yang sudah dikenal. Keamanan digital terbentuk dari kebiasaan kecil yang dilakukan secara konsisten."]], "baca-08": [["Ekosistem yang Saling Terhubung", "Ekosistem terdiri dari makhluk hidup dan lingkungan fisiknya. Tumbuhan, hewan, mikroorganisme, air, tanah, dan udara saling memengaruhi. Perubahan pada satu bagian dapat berdampak pada bagian lain. Ketika ruang hijau berkurang, misalnya, suhu lokal dan tempat hidup satwa dapat berubah.\n\nKeanekaragaman hayati membantu ekosistem tetap berfungsi. Setiap spesies memiliki peran, mulai dari penyerbukan hingga penguraian bahan organik. Menjaga alam berarti menjaga hubungan yang menopang kehidupan."], ["Memahami Perubahan Iklim", "Iklim menggambarkan pola cuaca dalam jangka panjang. Peningkatan gas rumah kaca dari pembakaran bahan bakar fosil, perubahan penggunaan lahan, dan kegiatan manusia lainnya memperkuat pemanasan global. Dampaknya dapat berupa gelombang panas, perubahan pola hujan, dan kenaikan permukaan laut.\n\nTindakan bersama dibutuhkan: menghemat energi, menggunakan transportasi lebih rendah emisi bila memungkinkan, mengurangi sampah, melindungi pepohonan, dan mendukung kebijakan berbasis ilmu pengetahuan. Langkah lokal tidak menyelesaikan semuanya, tetapi menjadi bagian dari perubahan yang lebih luas."]], "baca-09": [["Angka di Sekitar Kita", "Matematika hadir dalam keputusan sehari-hari. Saat membandingkan harga, menghitung waktu perjalanan, atau membagi bahan makanan, kita menggunakan rasio dan operasi dasar. Persentase membantu membaca diskon dan perubahan nilai.\n\nJika sebuah barang berharga Rp80.000 mendapat potongan 15 persen, potongannya adalah 0,15 × 80.000 = Rp12.000. Harga setelah diskon menjadi Rp68.000. Memahami langkah hitung membantu kita menilai apakah sebuah penawaran benar-benar menguntungkan."], ["Membaca Data", "Rata-rata dapat merangkum sekumpulan angka, tetapi tidak selalu menceritakan keseluruhan keadaan. Median, yaitu nilai tengah setelah data diurutkan, kadang lebih tepat ketika terdapat nilai yang sangat tinggi atau rendah.\n\nSaat membaca grafik, periksa judul, satuan, rentang sumbu, dan sumber data. Grafik yang sumbunya dipotong dapat membuat perubahan kecil terlihat sangat besar. Matematika bukan hanya menghitung jawaban, melainkan juga mengajukan pertanyaan yang tepat terhadap angka."]], "baca-10": [["Dari Rasa Ingin Tahu ke Pertanyaan", "Penelitian dimulai dari rasa ingin tahu yang dirumuskan menjadi pertanyaan jelas. Pertanyaan yang baik memiliki ruang lingkup terukur dan dapat dijawab melalui data atau kajian sumber. Hindari pertanyaan yang terlalu luas; tentukan konteks, kelompok yang diamati, dan hal yang ingin dipahami.\n\nSetelah itu, telusuri penelitian terdahulu. Catat siapa penulisnya, kapan diterbitkan, metode yang digunakan, serta keterbatasannya. Sumber tepercaya tidak selalu berarti satu sumber yang paling terkenal; periksa relevansi dan kualitas buktinya."], ["Menulis dengan Jujur", "Susun laporan dengan alur yang mudah diikuti: latar belakang, tujuan, metode, hasil, pembahasan, dan kesimpulan. Pisahkan temuan dari pendapat pribadi. Jika data tidak mendukung dugaan awal, laporkan apa adanya.\n\nCantumkan semua sumber yang digunakan dan beri tanda kutip untuk kalimat yang diambil langsung. Jangan mengubah data agar sesuai harapan. Tulisan ilmiah yang baik bukan tulisan yang selalu menghasilkan jawaban besar, melainkan tulisan yang transparan sehingga pembaca dapat menilai proses dan temuannya."]]};
+        const NOTIF_KEY = 'wordie_v4_notifs';
+        function isReadable(b) { return String(b.id).startsWith('baca-'); }
+        function bacaBtn(b, kecil) {
+            return isReadable(b) ? `<button onclick="openReader('${b.id}')" class="flex-1 ${kecil ? 'py-2 px-2' : 'py-2.5 px-3'} rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 flex items-center justify-center gap-1.5 transition"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> ${kecil ? 'Baca' : 'Baca Sekarang'}</button>` : '';
+        }
+        function renderBacaSection() { renderBookCardGrid(books.filter(isReadable), 'katalog-baca-grid'); }
+        function lateDaysOf(loan) {
+            if (loan.status !== 'Sedang Dipinjam') return 0;
+            const t0 = new Date(loan.date); if (isNaN(t0)) return 0;
+            const due = t0.getTime() + (parseInt(loan.duration, 10) || 14) * 86400000;
+            return Math.max(0, Math.floor((Date.now() - due) / 86400000));
+        }
+        function renderNotifs() {
+            const box = document.getElementById('notif-list'); if (!box || !currentBorrower) return;
+            const list = JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]').filter(n => n.email === currentBorrower.email);
+            document.getElementById('notif-count').textContent = list.length + ' belum dibaca';
+            box.innerHTML = list.length ? list.map(n => `<div class="p-4 rounded-2xl border border-terracotta-200 bg-terracotta-50/70 dark:bg-terracotta-900/20"><div class="flex items-start justify-between gap-3"><p class="font-bold text-sm">${n.judul}</p><span class="text-[10px] text-slate-400 shrink-0">${new Date(n.at).toLocaleString('id-ID')}</span></div><p class="text-sm text-slate-600 dark:text-slate-300 mt-1">${n.pesan}</p></div>`).join('') : '<p class="text-sm text-slate-500 py-3">Belum ada notifikasi. Pesan dari admin akan muncul di sini.</p>';
+        }
+        function openReader(id) {
+            const b = books.find(x => x.id === id), bab = BACA_ISI[id]; if (!b || !bab) return;
+            document.getElementById('page-baca').innerHTML = `
+                <button onclick="navigateTo('katalog')" class="inline-flex items-center gap-2 text-sm font-bold text-terracotta-600 hover:underline"><i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog</button>
+                <header class="rounded-3xl p-7 sm:p-10 text-white bg-gradient-to-br from-slatebrand-900 via-slatebrand-800 to-terracotta-900 shadow-xl"><span class="inline-flex px-3 py-1 rounded-full bg-white/15 text-xs font-bold">${b.category} • Baca Online</span><h1 class="font-display text-3xl sm:text-4xl font-extrabold mt-4">${b.title}</h1><p class="text-slate-300 mt-2">Oleh ${b.author} • ${b.year}</p><p class="text-sm text-slate-200 leading-relaxed mt-5 max-w-2xl">${b.synopsis}</p></header>
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slatebrand-900 p-4 rounded-2xl border border-stone-200 dark:border-slate-800"><div class="text-xs text-slate-500">Pilih ukuran teks agar nyaman dibaca</div><div class="flex gap-2"><button onclick="ubahTeks(-1)" class="px-3 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 font-bold">A−</button><button onclick="ubahTeks(1)" class="px-3 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 font-bold">A+</button></div></div>
+                <article id="isi-buku" class="bg-white dark:bg-slatebrand-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-6 sm:p-10 space-y-9 shadow-sm">
+                    ${bab.map((c, i) => `<section><p class="text-xs uppercase tracking-widest font-extrabold text-terracotta-600 dark:text-terracotta-400">Bab ${i + 1}</p><h2 class="font-display text-2xl font-extrabold mt-2 mb-4">${c[0]}</h2><div class="reader-copy text-slate-700 dark:text-slate-300 leading-8 whitespace-pre-line">${c[1]}</div></section>`).join('')}
+                    <div class="pt-6 border-t border-stone-200 dark:border-slate-700 text-center"><p class="font-bold text-sm">Terima kasih telah membaca bersama Wordie.</p><button onclick="navigateTo('katalog')" class="inline-flex mt-3 px-5 py-3 rounded-xl bg-terracotta-600 text-white text-sm font-bold">Jelajahi Buku Lain</button></div>
+                </article>`;
+            navigateTo('baca');
+        }
+        function ubahTeks(d) { document.querySelectorAll('#isi-buku .reader-copy').forEach(p => { p.style.fontSize = Math.max(14, Math.min(24, parseFloat(getComputedStyle(p).fontSize) + d * 2)) + 'px'; }); }
+        function bukaInfoKartu(k) {
+            let m = document.getElementById('modal-info-kartu');
+            if (!m) {
+                m = document.createElement('div'); m.id = 'modal-info-kartu';
+                m.className = 'fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm';
+                m.innerHTML = '<div class="info-popup-panel relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-2xl border border-stone-200 dark:border-slate-700"><button type="button" aria-label="Tutup" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-stone-100 dark:bg-slate-800 text-xl" onclick="tutupInfoKartu()">×</button><div id="isi-info-kartu" class="pr-5"></div></div>';
+                document.body.appendChild(m); m.addEventListener('click', e => { if (e.target === m) tutupInfoKartu(); });
+            }
+            const c = k.cloneNode(true); c.removeAttribute('onclick'); c.classList.remove('zoom-out-card', 'cursor-pointer'); c.classList.add('is-visible');
+            const w = document.getElementById('isi-info-kartu'); w.innerHTML = ''; w.appendChild(c);
+            m.classList.remove('hidden'); m.classList.add('flex');
+            requestAnimationFrame(() => m.querySelector('.info-popup-panel').classList.add('info-popup-show'));
+        }
+        function tutupInfoKartu() { const m = document.getElementById('modal-info-kartu'); if (!m) return; m.classList.add('hidden'); m.classList.remove('flex'); m.querySelector('.info-popup-panel').classList.remove('info-popup-show'); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') tutupInfoKartu(); });
         let books = [];
         let loans = [];
         let cart = [];
@@ -1286,6 +1312,7 @@
                 loans = JSON.parse(localStorage.getItem(KEYS.LOANS)) || JSON.parse(JSON.stringify(DEFAULT_LOANS));
                 cart = JSON.parse(localStorage.getItem(KEYS.CART)) || [];
                 userProfile = JSON.parse(localStorage.getItem(KEYS.USER)) || { ...DEFAULT_USER };
+                DEFAULT_BOOKS.filter(d => isReadable(d) && !books.some(b => b.id === d.id)).forEach(d => books.push({ ...d }));
                 isAdminAuthenticated = localStorage.getItem(KEYS.ADMIN_SESSION) === 'true';
                 borrowerUsers = JSON.parse(localStorage.getItem(KEYS.BORROWER_USERS)) || [];
                 const savedBorrowerEmail = localStorage.getItem(KEYS.BORROWER_SESSION);
@@ -1428,7 +1455,7 @@
         }
 
         function navigateTo(pageName) {
-            const pages = ['beranda', 'katalog', 'profil', 'akun', 'admin'];
+            const pages = ['beranda', 'katalog', 'profil', 'akun', 'admin', 'baca'];
             pages.forEach(p => {
                 const el = document.getElementById(`page-${p}`);
                 if (el) el.classList.add('hidden');
@@ -1586,6 +1613,7 @@
                             <button onclick="openBookDetailModal('${book.id}')" class="px-3 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs font-bold hover:bg-stone-200 transition">
                                 Detail
                             </button>
+                            ${bacaBtn(book, true)}
                             <button onclick="addToCart('${book.id}')" ${book.stock <= 0 ? 'disabled' : ''} class="flex-1 py-2 px-3 rounded-xl text-xs font-bold text-white transition ${
                                 book.stock <= 0 ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed' : 'bg-terracotta-600 hover:bg-terracotta-700'
                             }">
@@ -1640,6 +1668,7 @@
         }
 
         function renderKatalogBooks() {
+            renderBacaSection();
             const query = (document.getElementById('katalog-search-input')?.value || '').toLowerCase().trim();
             const cat = document.getElementById('katalog-category-select')?.value || 'Semua';
             const sort = document.getElementById('katalog-sort-select')?.value || 'newest';
@@ -1689,10 +1718,11 @@
                                 ${book.synopsis}
                             </p>
                         </div>
-                        <div class="pt-2 flex items-center gap-2">
+                        <div class="pt-2 flex flex-wrap items-center gap-2">
                             <button onclick="openBookDetailModal('${book.id}')" class="px-3.5 py-2.5 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-xs font-bold transition">
                                 Sinopsis
                             </button>
+                            ${bacaBtn(book)}
                             <button onclick="addToCart('${book.id}')" ${book.stock <= 0 ? 'disabled' : ''} class="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold text-white flex items-center justify-center gap-1.5 transition ${
                                 book.stock <= 0
                                 ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed'
@@ -1742,11 +1772,11 @@
                                     ${book.stock > 0 ? `${book.stock} Eksemplar Tersedia` : 'Stok Sedang Kosong'}
                                 </span>
                             </div>
-                            <button onclick="addToCart('${book.id}'); closeModal('modal-book-detail');" ${book.stock <= 0 ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl font-bold text-xs text-white flex items-center gap-2 transition ${
+                            <div class="flex flex-wrap gap-2 justify-end">${isReadable(book) ? `<button onclick="closeModal('modal-book-detail');openReader('${book.id}')" class="px-4 py-2.5 rounded-xl font-bold text-xs text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4"></i> Baca Sekarang</button>` : ''}<button onclick="addToCart('${book.id}'); closeModal('modal-book-detail');" ${book.stock <= 0 ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl font-bold text-xs text-white flex items-center gap-2 transition ${
                                 book.stock <= 0 ? 'bg-slate-300 cursor-not-allowed' : 'bg-terracotta-600 hover:bg-terracotta-700 shadow-lg'
                             }">
                                 <i data-lucide="plus" class="w-4 h-4"></i> Tambah ke Keranjang
-                            </button>
+                            </button></div>
                         </div>
                     </div>
                 </div>
@@ -1987,9 +2017,9 @@
 
         // PROFIL & PELACAKAN AKUN PEMINJAM
         function renderUserProfile() {
-            const profile = currentBorrower || userProfile;
+            const profile = currentBorrower || userProfile; renderNotifs();
             document.getElementById('display-user-name').textContent = profile.name || '';
-            document.getElementById('display-user-email').textContent = `${profile.email || ''} • ${profile.address || ''}`;
+            document.getElementById('display-user-email').textContent = `${[profile.email, profile.phone, profile.address].filter(Boolean).join(' • ')}`;
             const initials = (profile.name || 'WR').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'WR';
             document.getElementById('user-avatar-initials').textContent = initials;
             document.getElementById('input-profile-name').value = profile.name || '';
@@ -2024,17 +2054,7 @@
 
         const LOAN_STEPS = ['Diproses', 'Dikirim', 'Sedang Dipinjam', 'Dikembalikan'];
 
-        function simulateLateDay(loanId) {
-            const loan = loans.find(l => l.id === loanId);
-            if (!loan || loan.status !== 'Sedang Dipinjam') return;
-            loan.lateDays = (loan.lateDays || 0) + 1;
-            saveAllState();
-            renderLoansTracking();
-            if (isAdminAuthenticated) renderAdminAllLoans();
-            showToast(`Simulasi terlambat ${loan.lateDays} hari: Denda Rp ${(loan.lateDays * 5000).toLocaleString('id-ID')}`, 'info');
-        }
-
-        function advanceLoanStep(loanId) {
+                function advanceLoanStep(loanId) {
             const loan = loans.find(l => l.id === loanId);
             if (!loan) return;
             const idx = LOAN_STEPS.indexOf(loan.status);
@@ -2047,7 +2067,7 @@
                     const book = books.find(b => b.id === item.bookId);
                     if (book) book.stock += item.qty;
                 });
-                const fineMsg = loan.lateDays > 0 ? ` Denda keterlambatan Rp ${(loan.lateDays * 5000).toLocaleString('id-ID')} telah dibayarkan.` : '';
+                const fineMsg = lateDaysOf(loan) > 0 ? ` Denda keterlambatan Rp ${(lateDaysOf(loan) * 5000).toLocaleString('id-ID')} telah dibayarkan.` : '';
                 showToast(`Buku telah dikembalikan!${fineMsg} Stok katalog otomatis bertambah.`, 'success');
             } else {
                 showToast(`Status ${loan.id} diperbarui: ${loan.status}`, 'info');
@@ -2123,8 +2143,8 @@
                             <p class="text-slate-500 pt-1">Alamat Tujuan: ${loan.address}</p>
                             <div class="pt-1.5 mt-1.5 border-t border-stone-200/70 dark:border-slate-700/70 flex flex-wrap items-center justify-between gap-2">
                                 <span class="text-slate-500">Denda Keterlambatan: <strong class="text-slate-700 dark:text-slate-200">Rp 5.000 / hari</strong></span>
-                                ${loan.lateDays && loan.lateDays > 0
-                                    ? `<span class="px-2.5 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-extrabold">Terlambat ${loan.lateDays} Hari • Total Denda: Rp ${(loan.lateDays * 5000).toLocaleString('id-ID')}</span>`
+                                ${lateDaysOf(loan) && lateDaysOf(loan) > 0
+                                    ? `<span class="px-2.5 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-extrabold">Terlambat ${lateDaysOf(loan)} Hari • Total Denda: Rp ${(lateDaysOf(loan) * 5000).toLocaleString('id-ID')}</span>`
                                     : `<span class="px-2.5 py-0.5 rounded-lg bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold">Tepat Waktu (Denda Rp 0)</span>`
                                 }
                             </div>
@@ -2132,19 +2152,15 @@
 
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <div>
-                                ${loan.status === 'Sedang Dipinjam' ? `
-                                    <button onclick="simulateLateDay('${loan.id}')" class="px-3 py-1.5 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 hover:opacity-85 text-[11px] font-bold transition">
-                                        + Simulasi Telat 1 Hari (Denda Rp 5.000)
-                                    </button>
-                                ` : ''}
+                                
                             </div>
                             <div class="ml-auto">
-                                ${isDone ? `<span class="text-xs font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Selesai Dikembalikan${loan.lateDays > 0 ? ` (Denda Lunas: Rp ${(loan.lateDays * 5000).toLocaleString('id-ID')})` : ''}</span>` :
+                                ${isDone ? `<span class="text-xs font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Selesai Dikembalikan${lateDaysOf(loan) > 0 ? ` (Denda Lunas: Rp ${(lateDaysOf(loan) * 5000).toLocaleString('id-ID')})` : ''}</span>` :
                                   canUserAct ? `
                                     <button onclick="advanceLoanStep('${loan.id}')" class="px-4 py-2 rounded-xl text-xs font-bold text-white shadow-md transition ${
                                         loan.status === 'Sedang Dipinjam' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-terracotta-600 hover:bg-terracotta-700'
                                     }">
-                                        ${loan.status === 'Sedang Dipinjam' && loan.lateDays > 0 ? `Bayar Denda Rp ${(loan.lateDays * 5000).toLocaleString('id-ID')} & Kembalikan` : btnText}
+                                        ${loan.status === 'Sedang Dipinjam' && lateDaysOf(loan) > 0 ? `Bayar Denda Rp ${(lateDaysOf(loan) * 5000).toLocaleString('id-ID')} & Kembalikan` : btnText}
                                     </button>
                                   ` : `<span class="text-xs text-amber-600 font-semibold flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> Sedang disiapkan oleh Pustakawan Admin</span>`
                                 }
@@ -2272,7 +2288,7 @@
                         <div class="flex items-center gap-2 self-end md:self-center flex-wrap justify-end">
                             ${!isDone && loan.status === 'Sedang Dipinjam' ? `
                                 <button onclick="sendDueDateReminder('${loan.id}')" class="px-3 py-2 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-bold hover:opacity-85 transition flex items-center gap-1.5" title="Kirim Info Bahwa Besok Batas Pengembalian">
-                                    <i data-lucide="bell" class="w-3.5 h-3.5"></i> Kirim Pengingat H-1
+                                    <i data-lucide="bell" class="w-3.5 h-3.5"></i> Kirim Notifikasi
                                 </button>
                             ` : ''}
                             ${!isDone ? `
@@ -2293,7 +2309,8 @@
         function sendDueDateReminder(loanId) {
             const loan = loans.find(l => l.id === loanId);
             if (!loan) return;
-            showToast(`Pengingat H-1 dikirim ke ${loan.borrowerName}: Besok adalah batas akhir pengembalian buku!`, 'success');
+            const n = JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]'); n.unshift({ email: loan.borrowerEmail, judul: 'Pesan dari Admin e-perpus wordie', pesan: `Halo ${loan.borrowerName}, admin mengingatkan pengembalian buku untuk transaksi ${loan.id}.`, at: new Date().toISOString() }); localStorage.setItem(NOTIF_KEY, JSON.stringify(n));
+            showToast(`Notifikasi berhasil dikirim ke akun ${loan.borrowerName}.`, 'success');
         }
 
         function adminDeleteLoanRecord(loanId) {
@@ -2510,6 +2527,8 @@
                 item.style.transitionDelay = `${index * 150}ms`;
                 profilScrollObserver.observe(item);
             });
+            // Kartu Lokasi & Kontak muncul dulu, lalu peta menyusul.
+            document.querySelectorAll('#page-profil .loc-fade').forEach((el, i) => { el.style.transitionDelay = `${i * 180}ms`; });
         }
 
         window.addEventListener('DOMContentLoaded', initApp);
